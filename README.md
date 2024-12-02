@@ -9,9 +9,9 @@
 ## Setup:
 ### clone the repo
 ### set these environmental variables in MERN_Auth/.env
-  MONGO_URI={Your Database Connection URI}
-  PORT={Port on which server is listening}
-  JWT_SECRET={Secret for jsonwebtoken}
-  NODE_ENV=development
-  MAILTRAP_TOKEN={Signup to mailtrap and genrate your token for sending emails}
-  CLIENT_URL={client URL}
+####  MONGO_URI={Your Database Connection URI}
+####  PORT={Port on which server is listening}
+####  JWT_SECRET={Secret for jsonwebtoken}
+####  NODE_ENV=development
+####  MAILTRAP_TOKEN={Signup to mailtrap and genrate your token for sending emails}
+####  CLIENT_URL={client URL}
