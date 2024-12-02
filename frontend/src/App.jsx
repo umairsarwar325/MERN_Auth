@@ -117,9 +117,11 @@ const App = () => {
             </RedirectAuthenticatedUser>
           }
         />
+        {/* catch-all route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };
