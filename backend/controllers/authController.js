@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 import User from "../models/userModel.js";
-import { connectToDB } from "../db/connectToDB.js";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 import {
   sendPasswordResetEmail,
@@ -12,9 +11,7 @@ import {
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
-
   try {
-    await connectToDB();
     if (!email || !password || !name) {
       throw new Error("All fields are required");
     }
@@ -99,7 +96,6 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    await connectToDB();
     if (!email || !password) {
       throw new Error("All fields are required");
     }
@@ -151,7 +147,6 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    await connectToDB();
     if (!email) {
       throw new Error("All fields are required");
     }
@@ -172,7 +167,7 @@ export const forgotPassword = async (req, res) => {
 
     await sendPasswordResetEmail(
       userFromDB.email,
-      `${process.env.CLIENT_URL}/api/auth/reset-password/${userFromDB.resetPasswordToken}`
+      `${process.env.CLIENT_URL}/reset-password/${userFromDB.resetPasswordToken}`
     );
 
     res.status(200).json({
@@ -186,9 +181,8 @@ export const forgotPassword = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  const { token, newPassword, confirmNewPassword } = req.body;
+  const { token, password, confirmPassword } = req.body;
   try {
-    await connectToDB();
     const userFromDB = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpiresAt: { $gt: Date.now() },
@@ -199,8 +193,8 @@ export const resetPassword = async (req, res) => {
         .json({ success: false, message: "Invalid or expired token" });
     }
 
-    if (newPassword === confirmNewPassword) {
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+    if (password === confirmPassword) {
+      const hashedPassword = await bcrypt.hash(password, 10);
       userFromDB.password = hashedPassword;
       await userFromDB.save();
     } else {
@@ -220,9 +214,8 @@ export const resetPassword = async (req, res) => {
 };
 
 export const checkAuth = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req;
   try {
-    await connectToDB();
     const userFromDB = await User.findOne({ _id: userId });
     if (!userFromDB) {
       return res
