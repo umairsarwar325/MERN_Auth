@@ -1,14 +1,14 @@
-### Complete Role Based Authentication And Authorization System
+# Complete Role Based Authentication And Authorization System
 
 ## Features:
-# 1. signup
-# 2. login
-# 3. verify-email
-# 4. forget-password
+### 1. signup
+### 2. login
+### 3. verify-email
+### 4. forget-password
 
 ## Setup:
-# clone the repo
-# set these environmental variables in MERN_Auth/.env
+### clone the repo
+### set these environmental variables in MERN_Auth/.env
   MONGO_URI={Your Database Connection URI}
   PORT={Port on which server is listening}
   JWT_SECRET={Secret for jsonwebtoken}
